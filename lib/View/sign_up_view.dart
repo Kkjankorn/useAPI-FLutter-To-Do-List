@@ -54,7 +54,7 @@ class _Sign_upState extends State<Sign_up> {
                       ],
                     ),
                     SizedBox(
-                      width: 120,
+                      width: 70,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -62,30 +62,27 @@ class _Sign_upState extends State<Sign_up> {
                         Styletxt("SIGN UP", 20, FontWeight.w500),
                       ],
                     ),
-                    SizedBox(
-                      height: 50,
-                    ),
                   ],
                 ),
               ),
               Styletxt("Please enter the information", 16, FontWeight.w400),
               Styletxt("below access.", 16, FontWeight.w400),
               SizedBox(
-                height: 50,
+                height: 30,
               ),
               Container(
                   height: 98,
                   width: 98,
                   child: Image(image: Svg("asset/images/signup.svg"))),
               SizedBox(
-                height: 38,
+                height: 30,
               ),
               TextBox1(
                   "First name", false, first_name, 'Enter Your First name'),
               TextBox1("Last name", false, last_name, 'Enter Your Last name'),
               TextBox1("Email", false, email, 'Enter Your Email'),
               TextBox1("Password", true, pass, 'Enter Your Password'),
-              SizedBox(height: 60),
+              SizedBox(height: 40),
               ButtonApp(() {
                 signup_con.signupUser(
                     first_name, last_name, email, pass, context);

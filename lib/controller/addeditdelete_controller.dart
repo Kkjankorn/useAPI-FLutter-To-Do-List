@@ -65,29 +65,25 @@ class AddEditDeleteCon {
 
   void editTodo(TextEditingController todoTitle, TextEditingController todoDesc,
       String todoStatus, int userId, int listId, context) async {
-    if (todoTitle.text.length >= 55) {
-      showSnackBar2('Your Title too long', context);
-    } else {
-      final json = {
-        "user_todo_list_id": listId,
-        "user_todo_list_title": todoTitle.text,
-        "user_todo_list_desc": todoDesc.text,
-        "user_todo_list_completed": todoStatus,
-        "user_id": userId,
-        "user_todo_type_id": 1
-      };
-      final url = Uri.parse('http://192.168.26.33:6004/api/update_todo/');
+    final json = {
+      "user_todo_list_id": listId,
+      "user_todo_list_title": todoTitle.text,
+      "user_todo_list_desc": todoDesc.text,
+      "user_todo_list_completed": todoStatus,
+      "user_id": userId,
+      "user_todo_type_id": 1
+    };
+    final url = Uri.parse('http://192.168.26.33:6004/api/update_todo/');
 
-      final res =
-          await client.post(url, body: jsonEncode(json), headers: getHeaders());
-      if (res.statusCode == 200) {
-        showSnackBar('Edite Todo Complete', context);
-        Navigator.pop(context);
-      } else if (res.statusCode == 400) {
-        showSnackBar2('Edite Todo Fail!!', context);
-      } else {
-        showSnackBar2('Database Error!', context);
-      }
+    final res =
+        await client.post(url, body: jsonEncode(json), headers: getHeaders());
+    if (res.statusCode == 200) {
+      showSnackBar('Edite Todo Complete', context);
+      Navigator.pop(context);
+    } else if (res.statusCode == 400) {
+      showSnackBar2('Edite Todo Fail!!', context);
+    } else {
+      showSnackBar2('Database Error!', context);
     }
   }
 

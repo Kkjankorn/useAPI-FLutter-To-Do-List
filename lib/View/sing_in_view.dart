@@ -26,9 +26,8 @@ class _Sign_inState extends State<Sign_in> {
             decoration: BoxDecoration(
                 image: DecorationImage(
                     fit: BoxFit.cover,
-                    image: AssetImage("asset/images/signup.png"))),
+                    image: AssetImage("asset/images/background.png"))),
             child: Column(
-              mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Column(
@@ -70,15 +69,15 @@ class _Sign_inState extends State<Sign_in> {
                     TextBox1(
                         "Email", false, emailController, 'Enter Your Email'),
                     SizedBox(
-                      height: 19,
+                      height: 15,
                     ),
                     TextBox1("Password", true, passController,
                         'Enter Your Password'),
-                    SizedBox(
-                      height: 19,
-                    ),
+                    // SizedBox(
+                    //   height: 15,
+                    // ),
                     Container(
-                        padding: EdgeInsets.fromLTRB(10, 10, 30, 40),
+                        padding: EdgeInsets.fromLTRB(10, 10, 30, 25),
                         alignment: Alignment.centerRight,
                         child: Material(
                           type: MaterialType.transparency,
@@ -106,7 +105,7 @@ class _Sign_inState extends State<Sign_in> {
                       height: 20,
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(bottom: 50),
+                      padding: const EdgeInsets.only(bottom: 40),
                       child: ButtonApp(() {
                         Navigator.pushReplacement(context,
                             MaterialPageRoute(builder: (context) => Sign_up()));

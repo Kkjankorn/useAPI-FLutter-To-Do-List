@@ -4,6 +4,7 @@ import 'package:flutter_application/View/sing_in_view.dart';
 import 'package:flutter_application/controller/addeditdelete_controller.dart';
 import 'package:flutter_application/controller/signin_controller.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -55,7 +56,7 @@ class _InformationState extends State<Information> {
           context: context,
           builder: (context) {
             return AlertDialog(
-              title: const Text('Do you want to go back?'),
+              title: const Text('Do you want to go out?'),
               actionsAlignment: MainAxisAlignment.spaceBetween,
               actions: [
                 TextButton(
@@ -196,25 +197,19 @@ class _InformationState extends State<Information> {
               child: FutureBuilder<List<DataModel>>(
                   future: getTodo.getData(userid),
                   builder: (context, snapshot) {
-                    //log('in controll ${getTodo.toDolist.length}');
                     if (snapshot.data == null) {
                       return Center();
                     } else if (snapshot.data!.length == 0) {
                       return Center();
                     } else {
-                      //log('Data from future${snapshot.data!.length}');
-
                       return Padding(
                         padding: const EdgeInsets.fromLTRB(10, 5, 17, 5),
                         child: ListView.builder(
                           itemCount: snapshot.data!.length,
                           itemBuilder: (context, index) {
-                            //log('${snapshot.data!.length}');
                             DataModel getdata = snapshot.data![index];
                             DateTime dataDate = getdata.userTodoListLastUpdate;
                             String formattedDate = dateFormat.format(dataDate);
-                            //int checkin = snapshot.data!.length;
-                            //log(' data from list $checkin');
                             if (!getdata.userTodoListTitle
                                     .toLowerCase()
                                     .contains(search.text.toLowerCase()) ||
@@ -264,16 +259,20 @@ class _InformationState extends State<Information> {
                                                       'asset/images/false.svg'),
                                                 ),
                                           Container(
-                                            width: 290,
-                                            child: Wrap(
-                                              children: [
-                                                Styletxt(
-                                                    '${getdata.userTodoListTitle}',
-                                                    20,
-                                                    FontWeight.w500)
-                                              ],
-                                            ),
-                                          )
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.75,
+                                              child: Text(
+                                                '${getdata.userTodoListTitle}',
+                                                overflow: TextOverflow.ellipsis,
+                                                maxLines: 1,
+                                                style: GoogleFonts.outfit(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.w500,
+                                                  fontStyle: FontStyle.normal,
+                                                ),
+                                              ))
                                         ],
                                       ),
                                       InkWell(
@@ -392,7 +391,9 @@ class _InformationState extends State<Information> {
                                   Column(
                                     children: [
                                       Container(
-                                        width: 290,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.8,
                                         child: Wrap(
                                           children: [
                                             Styletxt('${formattedDate}', 12,
@@ -401,7 +402,9 @@ class _InformationState extends State<Information> {
                                         ),
                                       ),
                                       Container(
-                                        width: 290,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.8,
                                         height: 75,
                                         child: Wrap(
                                           children: [
@@ -417,7 +420,6 @@ class _InformationState extends State<Information> {
                                 ],
                               ),
                             );
-                            // Container();
                           },
                         ),
                       );
@@ -445,7 +447,6 @@ class _InformationState extends State<Information> {
           shape: CircleBorder(),
           child: Image(image: Svg("asset/images/iconbuttonadd.svg")),
         ),
-        //viewpopscope
       ),
     );
   }
