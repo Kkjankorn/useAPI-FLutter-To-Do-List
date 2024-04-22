@@ -9,11 +9,11 @@ import 'package:http/http.dart' as http;
 import '../model/signin_model.dart';
 
 class SigninController {
-  final client = http.Client();
+  final client = http.Client(); // many request
   final baseUrl = "http://192.168.26.33:6004/api";
   final token = "950b88051dc87fe3fcb0b4df25eee676";
   late SigninModel user; //class model ของ sign in
-  late DataModel data; //class model ของ sign in
+  late DataModel data; //class model ของ data
 
   //set headers
   dynamic getHeaders() {
