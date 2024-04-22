@@ -82,7 +82,7 @@ class _Sign_upState extends State<Sign_up> {
               TextBox1("Last name", false, last_name, 'Enter Your Last name'),
               TextBox1("Email", false, email, 'Enter Your Email'),
               TextBox1("Password", true, pass, 'Enter Your Password'),
-              SizedBox(height: 40),
+              SizedBox(height: 30),
               ButtonApp(() {
                 signup_con.signupUser(
                     first_name, last_name, email, pass, context);
