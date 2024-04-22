@@ -12,7 +12,7 @@ class SignupController {
   final client = http.Client();
   final baseUrl = "http://192.168.26.33:6004/api";
   final token = "950b88051dc87fe3fcb0b4df25eee676";
-  late SigninModel user; //class model ของ sign in
+  //late SigninModel user; //class model ของ sign in
 
   //set headers
   dynamic getHeaders() {
@@ -74,11 +74,11 @@ class SignupController {
     //user = Signup.fromJson(data);
     if (res.statusCode == 200) {
       showSnackBar('SIGN UP SUCCESS!!', context);
-      SharedPreferences pref = await SharedPreferences.getInstance();
-      pref.setString('fname', first_name);
-      pref.setString('lname', last_name);
-      pref.setString('email', mail);
-      pref.setString('pass', passw);
+      //SharedPreferences pref = await SharedPreferences.getInstance();
+      // pref.setString('fname', first_name);
+      // pref.setString('lname', last_name);
+      // pref.setString('email', mail);
+      // pref.setString('pass', passw);
 
       Navigator.pushReplacement(
         context,
@@ -92,10 +92,5 @@ class SignupController {
     } else {
       showSnackBar2('Database Error!', context);
     }
-  }
-
-  void clearLogin(TextEditingController email, TextEditingController pass) {
-    email.clear();
-    pass.clear();
   }
 }

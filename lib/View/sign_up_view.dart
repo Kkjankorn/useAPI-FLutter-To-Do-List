@@ -17,77 +17,89 @@ class _Sign_upState extends State<Sign_up> {
   final last_name = TextEditingController();
   final email = TextEditingController();
   final pass = TextEditingController();
-
+  final _formKey = GlobalKey<FormState>();
   SignupController signup_con = SignupController();
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: AssetImage("asset/images/signup.png"))),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: EdgeInsets.fromLTRB(20, 60, 0, 0),
-                child: Row(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
+    return GestureDetector(
+      onTap: () {
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Container(
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: AssetImage("asset/images/signup.png"))),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(20, 60, 0, 0),
+                    child: Row(
                       children: [
-                        FloatingActionButton.small(
-                          backgroundColor: HexColor("#53CD9F"),
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Sign_in()));
-                          },
-                          child: Icon(
-                            Icons.arrow_back,
-                            color: HexColor("#00503E"),
-                          ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            FloatingActionButton.small(
+                              backgroundColor: HexColor("#53CD9F"),
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Sign_in()));
+                              },
+                              child: Icon(
+                                Icons.arrow_back,
+                                color: HexColor("#00503E"),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          width: 70,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Styletxt("SIGN UP", 20, FontWeight.w500),
+                          ],
                         ),
                       ],
                     ),
-                    SizedBox(
-                      width: 70,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Styletxt("SIGN UP", 20, FontWeight.w500),
-                      ],
-                    ),
-                  ],
-                ),
+                  ),
+                  Styletxt("Please enter the information", 16, FontWeight.w400),
+                  Styletxt("below access.", 16, FontWeight.w400),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Container(
+                      height: 98,
+                      width: 98,
+                      child: Image(image: Svg("asset/images/signup.svg"))),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  TextBox1(
+                      "First name", false, first_name, 'Enter Your First name'),
+                  TextBox1(
+                      "Last name", false, last_name, 'Enter Your Last name'),
+                  TextBox1("Email", false, email, 'Enter Your Email'),
+                  TextBox1("Password", true, pass, 'Enter Your Password'),
+                  SizedBox(height: 30),
+                  ButtonApp(() {
+                    if (_formKey.currentState!.validate()) {
+                      signup_con.signupUser(
+                          first_name, last_name, email, pass, context);
+                    }
+                  }, "SIGN UP", 20, FontWeight.w400)
+                ],
               ),
-              Styletxt("Please enter the information", 16, FontWeight.w400),
-              Styletxt("below access.", 16, FontWeight.w400),
-              SizedBox(
-                height: 30,
-              ),
-              Container(
-                  height: 98,
-                  width: 98,
-                  child: Image(image: Svg("asset/images/signup.svg"))),
-              SizedBox(
-                height: 30,
-              ),
-              TextBox1(
-                  "First name", false, first_name, 'Enter Your First name'),
-              TextBox1("Last name", false, last_name, 'Enter Your Last name'),
-              TextBox1("Email", false, email, 'Enter Your Email'),
-              TextBox1("Password", true, pass, 'Enter Your Password'),
-              SizedBox(height: 30),
-              ButtonApp(() {
-                signup_con.signupUser(
-                    first_name, last_name, email, pass, context);
-              }, "SIGN UP", 20, FontWeight.w400)
-            ],
+            ),
           ),
         ),
       ),

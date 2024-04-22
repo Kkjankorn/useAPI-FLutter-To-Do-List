@@ -1,9 +1,12 @@
 // ignore_for_file: must_be_immutable
 
+import 'dart:developer';
 import 'dart:ui';
 
+import 'package:control_style/control_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
+import 'package:form_field_validator/form_field_validator.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -11,16 +14,7 @@ class TextBox1 extends StatelessWidget {
   String hinttext;
   bool hidetxt;
   var controltxt;
-  final _formKey = GlobalKey<FormState>();
   String checktxt;
-  String? value;
-
-  String? validateName(value) {
-    if (value == null || value.isEmpty) {
-      return '$checktxt';
-    }
-    return null; // Return null if input is valid
-  }
 
   TextBox1(this.hinttext, this.hidetxt, this.controltxt, this.checktxt);
 
@@ -28,27 +22,39 @@ class TextBox1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
-      child: Form(
-        key: _formKey,
-        child: TextFormField(
-          validator: validateName, // Call the validation function
-          onSaved: (value) {
-            controltxt = value!;
-          },
-          controller: controltxt,
-          autovalidateMode: AutovalidateMode.onUserInteraction,
-          style: GoogleFonts.outfit(
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-            fontStyle: FontStyle.normal,
-          ),
-          obscureText: hidetxt,
-          decoration: InputDecoration(
-            hintText: hinttext,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(15),
-            ),
-          ),
+      child: TextFormField(
+        validator: hinttext == 'Email'
+            ? MultiValidator([
+                EmailValidator(errorText: 'Enter a valid email address'),
+                RequiredValidator(errorText: '${checktxt}'),
+              ])
+            : RequiredValidator(errorText: '${checktxt}'),
+        onSaved: (value) {
+          controltxt = value!;
+        },
+        controller: controltxt,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        style: GoogleFonts.outfit(
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
+          fontStyle: FontStyle.normal,
+        ),
+        obscureText: hidetxt,
+        decoration: InputDecoration(
+          hintText: hinttext,
+          filled: true,
+          fillColor: HexColor('#F3F3F3'),
+          border: DecoratedInputBorder(
+              child: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15),
+                  borderSide: BorderSide.none),
+              shadow: [
+                BoxShadow(
+                    color: HexColor("#000000").withOpacity(0.12),
+                    blurRadius: 1,
+                    spreadRadius: 0,
+                    offset: Offset(0, 2))
+              ]),
         ),
       ),
     );
@@ -58,30 +64,41 @@ class TextBox1 extends StatelessWidget {
 class TextBox2 extends StatelessWidget {
   String hinttext;
   var controltxt;
+  String checktxt;
 
-  TextBox2(this.hinttext, this.controltxt);
+  TextBox2(this.hinttext, this.controltxt, this.checktxt);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 59,
-      width: MediaQuery.of(context).size.width * 0.85,
-      child: Form(
-        child: TextFormField(
-          controller: controltxt,
-          style: GoogleFonts.outfit(
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-            fontStyle: FontStyle.normal,
-          ),
-          decoration: InputDecoration(
-            filled: true,
-            fillColor: Colors.white,
-            hintText: hinttext,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-          ),
+      width: MediaQuery.of(context).size.width * 0.90,
+      child: TextFormField(
+        validator: RequiredValidator(errorText: '${checktxt}'),
+        onSaved: (value) {
+          controltxt = value!;
+        },
+        controller: controltxt,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        style: GoogleFonts.outfit(
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
+          fontStyle: FontStyle.normal,
+        ),
+        decoration: InputDecoration(
+          filled: true,
+          fillColor: HexColor('#FFFFFF'),
+          hintText: hinttext,
+          border: DecoratedInputBorder(
+              child: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide.none),
+              shadow: [
+                BoxShadow(
+                    color: HexColor("#000000").withOpacity(0.2),
+                    blurRadius: 6,
+                    spreadRadius: 0,
+                    offset: Offset(0, 0))
+              ]),
         ),
       ),
     );
@@ -91,30 +108,47 @@ class TextBox2 extends StatelessWidget {
 class FieldText extends StatelessWidget {
   String hinttext;
   var controltxt;
+  String checktxt;
 
-  FieldText(this.hinttext, this.controltxt);
+  FieldText(this.hinttext, this.controltxt, this.checktxt);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 166,
-      width: MediaQuery.of(context).size.width * 0.85,
+      width: MediaQuery.of(context).size.width * 0.90,
       child: TextFormField(
         keyboardType: TextInputType.multiline,
         maxLines: 6,
+        validator: MultiValidator([
+          MaxLengthValidator(250,
+              errorText: 'Description must not exceed 250 words.'),
+          RequiredValidator(errorText: '${checktxt}')
+        ]), // Call the validation function
+        onSaved: (value) {
+          controltxt = value!;
+        },
         controller: controltxt,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         style: GoogleFonts.outfit(
           fontSize: 16,
           fontWeight: FontWeight.w500,
           fontStyle: FontStyle.normal,
         ),
         decoration: InputDecoration(
-          fillColor: Colors.white,
           filled: true,
+          fillColor: HexColor('#FFFFFF'),
           hintText: hinttext,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
+          border: DecoratedInputBorder(
+              child: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide.none),
+              shadow: [
+                BoxShadow(
+                    color: HexColor("#000000").withOpacity(0.2),
+                    blurRadius: 6,
+                    spreadRadius: 0,
+                    offset: Offset(0, 0))
+              ]),
         ),
       ),
     );
