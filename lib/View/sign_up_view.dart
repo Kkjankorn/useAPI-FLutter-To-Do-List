@@ -85,7 +85,11 @@ class _Sign_upState extends State<Sign_up> {
                     height: 30,
                   ),
                   TextBox1(
-                      "First name", false, first_name, 'Enter Your First name'),
+                    "First name",
+                    false,
+                    first_name,
+                    'Enter Your First name',
+                  ),
                   TextBox1(
                       "Last name", false, last_name, 'Enter Your Last name'),
                   TextBox1("Email", false, email, 'Enter Your Email'),

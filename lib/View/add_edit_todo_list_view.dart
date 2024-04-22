@@ -28,13 +28,13 @@ class AddTodoList extends StatefulWidget {
 class _AddTodoListState extends State<AddTodoList> {
   final title = TextEditingController();
   final description = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   AddEditDeleteCon adlTodoList = AddEditDeleteCon();
   late int userId, listId;
   late String appbar;
   bool estatus = false;
   late String success;
-  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -77,7 +77,6 @@ class _AddTodoListState extends State<AddTodoList> {
                                 'Enter your Description'),
                             SizedBox(height: 10),
                             Container(
-                                height: 59,
                                 width: MediaQuery.of(context).size.width * 0.90,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
@@ -131,7 +130,7 @@ class _AddTodoListState extends State<AddTodoList> {
                                               userId,
                                               context);
                                         } else {
-                                          log("dont sent");
+                                          //log("dont sent");
                                           AddEditDeleteCon().showSnackBar2(
                                               "Pleas Enter Information",
                                               context);

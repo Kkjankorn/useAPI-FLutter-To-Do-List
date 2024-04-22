@@ -1,10 +1,8 @@
 import 'dart:developer';
-
 import 'package:flutter_application/View/sing_in_view.dart';
 import 'package:flutter_application/controller/addeditdelete_controller.dart';
 import 'package:flutter_application/controller/signin_controller.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/cupertino.dart';
@@ -132,12 +130,13 @@ class _InformationState extends State<Information> {
                                           "asset/images/logout.svg",
                                           210,
                                           "asset/images/arrowright.svg"),
-                                      onTap: () => Navigator.pushReplacement(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    Sign_in()),
-                                          )),
+                                      onTap: () => {
+                                            Navigator.pushAndRemoveUntil(
+                                                context, MaterialPageRoute(
+                                                    builder: (context) {
+                                              return Sign_in();
+                                            }), (route) => false)
+                                          }),
                                 ),
                               ],
                             ),
@@ -418,7 +417,7 @@ class _InformationState extends State<Information> {
                                                   .size
                                                   .width *
                                               0.8,
-                                          height: 75,
+                                          height: 70,
                                           child: Wrap(
                                             children: [
                                               Styletxt(

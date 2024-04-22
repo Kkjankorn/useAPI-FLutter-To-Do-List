@@ -113,6 +113,7 @@ class SigninController {
 
     toDolist.sort(
         (a, b) => b.userTodoListLastUpdate.compareTo(a.userTodoListLastUpdate));
+
     return toDolist;
   }
 

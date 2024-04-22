@@ -17,10 +17,19 @@ class Sign_in extends StatefulWidget {
 
 class _Sign_inState extends State<Sign_in> {
   final emailController = TextEditingController();
+
   final passController = TextEditingController();
+
   final _formKey = GlobalKey<FormState>();
 
   SigninController singin_con = SigninController();
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    emailController.dispose();
+    passController.dispose();
+  }
 
   Widget build(BuildContext context) {
     return GestureDetector(

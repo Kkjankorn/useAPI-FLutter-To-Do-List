@@ -14,9 +14,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        primarySwatch: Colors.green,
-      ),
+          // useMaterial3: false,
+          // primarySwatch: Colors.green,
+          ),
       home: Sign_in(),
+      routes: {'/sign/': (context) => Sign_in()},
       builder: EasyLoading.init(),
     );
   }
