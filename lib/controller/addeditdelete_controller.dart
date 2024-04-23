@@ -97,7 +97,6 @@ class AddEditDeleteCon {
 
     if (res.statusCode == 200) {
       showSnackBar('DELETE SUCCESS!!', context);
-      Navigator.pop(context);
     } else if (res.statusCode == 400) {
       showSnackBar2('incorrect.', context);
     } else {

@@ -292,6 +292,8 @@ class _InformationState extends State<Information> {
                                                                           getdata
                                                                               .userTodoListId,
                                                                           context);
+                                                                  Navigator.pop(
+                                                                      context);
                                                                   setState(
                                                                       () {});
                                                                 }),

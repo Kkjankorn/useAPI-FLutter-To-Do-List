@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:flutter_application/View/sing_in_view.dart';
 import 'package:http/http.dart' as http;
 
 class SignupController {
