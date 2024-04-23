@@ -1,12 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_application/View/sing_in_view.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-
-import '../model/signin_model.dart';
 
 class SignupController {
   final client = http.Client();
@@ -48,11 +44,6 @@ class SignupController {
       TextEditingController email,
       TextEditingController pass,
       var context) async {
-    String first_name = fname.text;
-    String last_name = lname.text;
-    String mail = email.text;
-    String passw = pass.text;
-
     final json = {
       "user_fname": fname.text,
       "user_lname": lname.text,
@@ -65,28 +56,10 @@ class SignupController {
 
     final res =
         await client.post(url, body: jsonEncode(json), headers: getHeaders());
-    //log(res.body);
-    //var data = jsonDecode(res.body); //แปลงข้อมูล json
-    //print(data);
 
-    log(res.statusCode.toString());
-
-    //user = Signup.fromJson(data);
+    //log(res.statusCode.toString());
     if (res.statusCode == 200) {
       showSnackBar('SIGN UP SUCCESS!!', context);
-      //SharedPreferences pref = await SharedPreferences.getInstance();
-      // pref.setString('fname', first_name);
-      // pref.setString('lname', last_name);
-      // pref.setString('email', mail);
-      // pref.setString('pass', passw);
-
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (context) => Sign_in(
-                //userdt: user,
-                )),
-      );
     } else if (res.statusCode == 400) {
       showSnackBar2('Duplicate or Incorect information.', context);
     } else {

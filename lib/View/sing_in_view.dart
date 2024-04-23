@@ -17,12 +17,10 @@ class Sign_in extends StatefulWidget {
 
 class _Sign_inState extends State<Sign_in> {
   final emailController = TextEditingController();
-
   final passController = TextEditingController();
-
   final _formKey = GlobalKey<FormState>();
-
   SigninController singin_con = SigninController();
+
   @override
   void dispose() {
     // TODO: implement dispose
@@ -91,9 +89,6 @@ class _Sign_inState extends State<Sign_in> {
                       ),
                       TextBox1("Password", true, passController,
                           'Enter Your Password'),
-                      // SizedBox(
-                      //   height: 15,
-                      // ),
                       Container(
                           padding: EdgeInsets.fromLTRB(10, 10, 30, 25),
                           alignment: Alignment.centerRight,
@@ -110,15 +105,8 @@ class _Sign_inState extends State<Sign_in> {
                   Column(
                     children: [
                       ButtonApp(() {
-                        // if (_formKey.currentState!.validate()) {
-                        //   _formKey.currentState!.save();
-                        //   // Do something with the validated input
-                        // }
-
-                        log('${_formKey.currentState!.validate()}');
                         if (_formKey.currentState!.validate()) {
                           EasyLoading.show(status: 'loading...');
-
                           singin_con.signinUser(
                               emailController, passController, context);
                           EasyLoading.dismiss();

@@ -54,7 +54,6 @@ class AddEditDeleteCon {
         todoTitle.text.isNotEmpty &&
         todoDesc.text.isNotEmpty) {
       showSnackBar('Add Todo Complete', context);
-      Navigator.pop(context);
     } else if (res.statusCode == 400 && todoTitle.text.isEmpty ||
         todoDesc.text.isEmpty) {
       showSnackBar2('Add Todo Fail!!', context);
@@ -79,7 +78,6 @@ class AddEditDeleteCon {
         await client.post(url, body: jsonEncode(json), headers: getHeaders());
     if (res.statusCode == 200) {
       showSnackBar('Edite Todo Complete', context);
-      Navigator.pop(context);
     } else if (res.statusCode == 400) {
       showSnackBar2('Edite Todo Fail!!', context);
     } else {

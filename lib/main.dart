@@ -13,12 +13,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-          // useMaterial3: false,
-          // primarySwatch: Colors.green,
-          ),
+      theme: ThemeData(),
       home: Sign_in(),
-      routes: {'/sign/': (context) => Sign_in()},
       builder: EasyLoading.init(),
     );
   }

@@ -99,6 +99,13 @@ class _Sign_upState extends State<Sign_up> {
                     if (_formKey.currentState!.validate()) {
                       signup_con.signupUser(
                           first_name, last_name, email, pass, context);
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Sign_in(
+                                //userdt: user,
+                                )),
+                      );
                     }
                   }, "SIGN UP", 20, FontWeight.w400)
                 ],

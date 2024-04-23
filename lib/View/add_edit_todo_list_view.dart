@@ -1,25 +1,21 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_application/controller/addeditdelete_controller.dart';
+import 'package:flutter_application/model/data_model.dart';
 import 'package:flutter_application/style/app_style.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class AddTodoList extends StatefulWidget {
-  int userId, listId;
   String appbar;
-  String title, description, status;
-  bool sbut;
-  AddTodoList(
-      {super.key,
-      required this.userId,
-      required this.listId,
-      required this.appbar,
-      required this.title,
-      required this.description,
-      required this.status,
-      required this.sbut});
+  DataModel? dataModel;
+  int userId;
+  AddTodoList({
+    super.key,
+    required this.dataModel,
+    required this.appbar,
+    required this.userId,
+  });
 
   @override
   State<AddTodoList> createState() => _AddTodoListState();
@@ -33,19 +29,22 @@ class _AddTodoListState extends State<AddTodoList> {
   AddEditDeleteCon adlTodoList = AddEditDeleteCon();
   late int userId, listId;
   late String appbar;
-  bool estatus = false;
   late String success;
 
   @override
   void initState() {
     super.initState();
-    listId = widget.listId;
-    userId = widget.userId;
+    if (widget.dataModel != null) {
+      listId = widget.dataModel!.userTodoListId;
+      userId = widget.dataModel!.userId;
+      title.text = widget.dataModel!.userTodoListTitle;
+      description.text = widget.dataModel!.userTodoListDesc;
+      success = widget.dataModel!.userTodoListCompleted;
+    } else {
+      success = '';
+      userId = widget.userId;
+    }
     appbar = widget.appbar;
-    title.text = widget.title;
-    description.text = widget.description;
-    success = widget.status;
-    estatus = widget.sbut;
   }
 
   Widget build(BuildContext context) {
@@ -82,15 +81,12 @@ class _AddTodoListState extends State<AddTodoList> {
                                     borderRadius: BorderRadius.circular(10),
                                     border: Border.all(color: Colors.grey)),
                                 child: SwitchListTile(
-                                    value: estatus,
+                                    value: success == '1' ? true : false,
                                     onChanged: (value) {
                                       setState(() {
-                                        estatus = value;
-                                        if (estatus == true) {
-                                          success = '1';
-                                        } else {
-                                          success = '0';
-                                        }
+                                        value == true
+                                            ? success = '1'
+                                            : success = '0';
                                       });
                                     },
                                     title: Text('Success'),
@@ -129,6 +125,7 @@ class _AddTodoListState extends State<AddTodoList> {
                                               success,
                                               userId,
                                               context);
+                                          Navigator.pop(context);
                                         } else {
                                           //log("dont sent");
                                           AddEditDeleteCon().showSnackBar2(
@@ -173,15 +170,12 @@ class _AddTodoListState extends State<AddTodoList> {
                                   borderRadius: BorderRadius.circular(10),
                                   border: Border.all(color: Colors.grey)),
                               child: SwitchListTile(
-                                  value: estatus,
+                                  value: success == '1' ? true : false,
                                   onChanged: (value) {
                                     setState(() {
-                                      estatus = value;
-                                      if (estatus == true) {
-                                        success = '1';
-                                      } else {
-                                        success = '0';
-                                      }
+                                      value == true
+                                          ? success = '1'
+                                          : success = '0';
                                     });
                                   },
                                   title: Text('Success'),
@@ -210,10 +204,9 @@ class _AddTodoListState extends State<AddTodoList> {
                                             color: Colors.white)),
                                   ),
                                   onPressed: () async {
-                                    setState(() {
-                                      adlTodoList.editTodo(title, description,
-                                          success, userId, listId, context);
-                                    });
+                                    adlTodoList.editTodo(title, description,
+                                        success, userId, listId, context);
+                                    Navigator.pop(context);
                                   },
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor:

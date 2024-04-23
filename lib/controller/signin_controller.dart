@@ -13,7 +13,7 @@ class SigninController {
   final baseUrl = "http://192.168.26.33:6004/api";
   final token = "950b88051dc87fe3fcb0b4df25eee676";
   late SigninModel user; //class model ของ sign in
-  late DataModel data; //class model ของ data
+  //late DataModel data; //class model ของ data
 
   //set headers
   dynamic getHeaders() {
@@ -92,7 +92,7 @@ class SigninController {
   late List<DataModel> toDolist = [];
 
   Future<List<DataModel>> getData(int userId) async {
-    print('message');
+    //print('message');
     toDolist.clear();
     final url = Uri.parse('http://192.168.26.33:6004/api/todo_list/$userId');
     final res = await http.get(url, headers: {

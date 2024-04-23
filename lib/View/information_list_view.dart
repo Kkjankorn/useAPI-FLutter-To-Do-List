@@ -28,23 +28,15 @@ class Information extends StatefulWidget {
 }
 
 class _InformationState extends State<Information> {
-  late String fname;
-  late String lname;
-  //late DataModel user;
   SigninController getTodo = SigninController();
   TextEditingController search = TextEditingController();
-  //List<DataModel> toDolist = [];
-  late int userid;
   DateFormat dateFormat = DateFormat('HH:mm a  dd/MM/yyyy');
   bool status = false;
 
   @override
   void initState() {
     super.initState();
-    fname = widget.firstname;
-    lname = widget.lastname;
-    userid = widget.userId;
-    log('$userid');
+    //log('$userid');
   }
 
   @override
@@ -82,99 +74,10 @@ class _InformationState extends State<Information> {
         },
         child: Scaffold(
           resizeToAvoidBottomInset: false,
-          appBar: AppBar(
-            backgroundColor: Color.fromARGB(255, 57, 174, 134),
-            leading: InkWell(
-                onTap: () {
-                  showModalBottomSheet<void>(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return SizedBox(
-                          height: 251,
-                          child: Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Container(
-                                  height: 3,
-                                  width: 52,
-                                  color: Colors.grey,
-                                ),
-                                SizedBox(
-                                  height: 23,
-                                ),
-                                Styletxt("SIGN OUT", 20, FontWeight.w500),
-                                SizedBox(
-                                  height: 19,
-                                ),
-                                Styletxt("Do you want to log out?", 16,
-                                    FontWeight.w400),
-                                SizedBox(
-                                  height: 50,
-                                ),
-                                Container(
-                                  height: 50,
-                                  width: 345,
-                                  decoration: BoxDecoration(
-                                      border: Border(
-                                    bottom: BorderSide(
-                                      color: const Color.fromARGB(
-                                          255, 217, 215, 215),
-                                      width: 1.0,
-                                    ),
-                                  )),
-                                  child: InkWell(
-                                      child: EditDelete(
-                                          //
-                                          "Sign out",
-                                          "asset/images/logout.svg",
-                                          210,
-                                          "asset/images/arrowright.svg"),
-                                      onTap: () => {
-                                            Navigator.pushAndRemoveUntil(
-                                                context, MaterialPageRoute(
-                                                    builder: (context) {
-                                              return Sign_in();
-                                            }), (route) => false)
-                                          }),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      });
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: CircleAvatar(
-                    child: Text(fname[0].toUpperCase()),
-                  ),
-                )),
-            title: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Hello!",
-                      style: TextStyle(fontSize: 16, color: Colors.white),
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.70,
-                      child: Text(
-                        "${fname} " + "${lname}",
-                        style: TextStyle(fontSize: 16, color: Colors.white),
-                      ),
-                    ),
-                  ],
-                )
-              ],
-            ),
+          appBar: appBarWidget(
+            fname: widget.firstname,
+            lname: widget.lastname,
+            appBar: AppBar(),
           ),
           body: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -200,10 +103,18 @@ class _InformationState extends State<Information> {
               ),
               Expanded(
                 child: FutureBuilder<List<DataModel>>(
-                    future: getTodo.getData(userid),
+                    future: getTodo.getData(widget.userId),
                     builder: (context, snapshot) {
                       if (snapshot.data == null) {
-                        return Center();
+                        return Center(
+                            // child: Text(
+                            //   "ไม่พบข้อมูล",
+                            //   style: TextStyle(
+                            //       color: Colors.red,
+                            //       fontWeight: FontWeight.bold,
+                            //       fontStyle: FontStyle.italic),
+                            // ),
+                            );
                       } else if (snapshot.data!.length == 0) {
                         return Center();
                       } else {
@@ -338,13 +249,9 @@ class _InformationState extends State<Information> {
                                                                       context,
                                                                       MaterialPageRoute(
                                                                           builder: (context) => AddTodoList(
-                                                                                userId: userid,
-                                                                                title: getdata.userTodoListTitle,
-                                                                                description: getdata.userTodoListDesc,
-                                                                                status: getdata.userTodoListCompleted,
                                                                                 appbar: "Edit Your Todo",
-                                                                                listId: getdata.userTodoListId,
-                                                                                sbut: getdata.userTodoListCompleted == '1' ? true : false,
+                                                                                dataModel: getdata,
+                                                                                userId: getdata.userId,
                                                                               ))).then(
                                                                     (value) =>
                                                                         setState(
@@ -447,13 +354,9 @@ class _InformationState extends State<Information> {
                   context,
                   MaterialPageRoute(
                       builder: (context) => AddTodoList(
-                            userId: userid,
                             appbar: "Add your Todo",
-                            title: '',
-                            description: '',
-                            status: '',
-                            listId: 1,
-                            sbut: status,
+                            dataModel: null,
+                            userId: widget.userId,
                           ))).then((value) => setState(() {}));
             },
             shape: CircleBorder(),
@@ -463,4 +366,120 @@ class _InformationState extends State<Information> {
       ),
     );
   }
+}
+
+class appBarWidget extends StatelessWidget implements PreferredSizeWidget {
+  const appBarWidget({
+    super.key,
+    required this.fname,
+    required this.lname,
+    required this.appBar,
+  });
+
+  final String fname;
+  final String lname;
+  final AppBar appBar;
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      backgroundColor: Color.fromARGB(255, 57, 174, 134),
+      leading: InkWell(
+          onTap: () {
+            showModalBottomSheet<void>(
+                context: context,
+                builder: (BuildContext context) {
+                  return SizedBox(
+                    height: 251,
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Container(
+                            height: 3,
+                            width: 52,
+                            color: Colors.grey,
+                          ),
+                          SizedBox(
+                            height: 23,
+                          ),
+                          Styletxt("SIGN OUT", 20, FontWeight.w500),
+                          SizedBox(
+                            height: 19,
+                          ),
+                          Styletxt(
+                              "Do you want to log out?", 16, FontWeight.w400),
+                          SizedBox(
+                            height: 50,
+                          ),
+                          Container(
+                            height: 50,
+                            width: 345,
+                            decoration: BoxDecoration(
+                                border: Border(
+                              bottom: BorderSide(
+                                color: const Color.fromARGB(255, 217, 215, 215),
+                                width: 1.0,
+                              ),
+                            )),
+                            child: InkWell(
+                                child: EditDelete(
+                                    //
+                                    "Sign out",
+                                    "asset/images/logout.svg",
+                                    210,
+                                    "asset/images/arrowright.svg"),
+                                onTap: () => {
+                                      Navigator.pushAndRemoveUntil(context,
+                                          MaterialPageRoute(builder: (context) {
+                                        return Sign_in();
+                                      }), (route) => false)
+                                    }),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                });
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: CircleAvatar(
+              child: Text(fname[0].toUpperCase()),
+            ),
+          )),
+      title: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                "Hello!",
+                style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Container(
+                width: MediaQuery.of(context).size.width * 0.70,
+                child: Text(
+                  "${fname} " + "${lname}",
+                  style: TextStyle(fontSize: 16, color: Colors.white),
+                ),
+              ),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
+  @override
+  // TODO: implement preferredSize
+  Size get preferredSize => new Size.fromHeight(appBar.preferredSize.height);
 }
